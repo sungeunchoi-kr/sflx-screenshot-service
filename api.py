@@ -9,7 +9,14 @@ import base64
 
 from snapshotter import Snapshotter
 
-rootdir = os.environ.get('ROOTDIR') or './post-snapshots'
+#
+# Environment Variables:
+#   PORT - The port on which the api service runs [default=8080]
+#   ROOTDIR - The path to the root directory where the data/screenshots will be saved. [default='./snapshots']
+#   CHROME_DRIVER_PATH - The path to the chrome driver [default='./chromedriver']
+#
+
+rootdir = os.environ.get('ROOTDIR') or './snapshots'
 
 app = Flask(__name__)
 api = Api(app)

@@ -1,12 +1,13 @@
+import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 from PIL import Image
-import re
 import time
-import bannerremover
+
 
 class Snapshotter:
+    chrome_driver_path = None
     driver = None
     last_run_time = 0
 
@@ -14,8 +15,10 @@ class Snapshotter:
         chrome_options = Options()
         chrome_options.headless = True
 
+        chrome_driver_path = os.environ.get('CHROME_DRIVER_PATH') or './chromedriver'
+
         print('Scraper: setting up driver.')
-        self.driver = webdriver.Chrome('./chromedriver', options=chrome_options)
+        self.driver = webdriver.Chrome(chrome_driver_path, options=chrome_options)
         print('Scraper: driver setup done.')
 
     ##
