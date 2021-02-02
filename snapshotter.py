@@ -45,13 +45,14 @@ class Snapshotter:
 
         print('soundcloud_charts: done.')
 
-        #img = Image.open(filepath)
+    def soundcloud_track_fullpage(self, url):
+        url = 'https://soundcloud.com/{}'.format(url)
+        print('soundcloud_charts: getting page <{}>.'.format(url))
+        self.driver.get(url)
+        print('soundcloud_charts: got page <{}>.'.format(url))
 
-        #reduce_factor = 3
-        #reduced_dimension = (img.size[0]//reduce_factor, img.size[1]//reduce_factor)
-        #print('snapshot_post: reduced_dimension=' + str(reduced_dimension))
-        #img_reduced = img.resize(reduced_dimension, Image.ANTIALIAS)
-        #img_reduced.save(filepath)
-        #img_jpg = img_reduced.convert("RGB")
-        #img_jpg.save(filepath + '.jpg', quality=36)
+        print('soundcloud_charts: taking screenshot.')
 
+        self.driver.screenshot(filepath)
+
+        print('soundcloud_track_fullpage: done.')

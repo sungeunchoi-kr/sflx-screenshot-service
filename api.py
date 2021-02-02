@@ -45,6 +45,28 @@ def takeSnapshots(chart_descriptor):
     except Exception as e:
         return { 'error': repr(e) }
 
+@app.route('/api/take-screenshot/soundcloud/tracks', methods=['POST'])
+def take_screenshot_soundcloud_tracks():
+    try:
+        url = request.args.get('url')
+        print('POST /api/take-screenshot/soundcloud/charts?url={}'
+              .format(url))
+
+        now = datetime.now()
+        subdir = now.strftime("%Y%m")
+        date_time = now.strftime("%Y%m%dT%H%M%S")
+
+        filename = date_time + '-' + str(uuid.uuid4()) + '.png'
+        uri = subdir + '/' + filename
+        filepath = rootdir + '/' + uri
+
+        Path(rootdir + '/' + subdir).mkdir(parents=True, exist_ok=True)
+        snap.soundcloud_track_fullpage(url, filepath)
+
+        return { 'uri': uri }
+    except Exception as e:
+        return { 'error': repr(e) }
+
 if __name__ == '__main__':
     port = os.environ.get('PORT') or 8080
     serve(app, host='0.0.0.0', port=port)
