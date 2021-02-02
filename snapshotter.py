@@ -45,14 +45,23 @@ class Snapshotter:
 
         print('soundcloud_charts: done.')
 
-    def soundcloud_track_fullpage(self, url):
+    def soundcloud_track_fullpage(self, url, filepath):
         url = 'https://soundcloud.com/{}'.format(url)
         print('soundcloud_charts: getting page <{}>.'.format(url))
         self.driver.get(url)
+        time.sleep(3)
         print('soundcloud_charts: got page <{}>.'.format(url))
 
         print('soundcloud_charts: taking screenshot.')
 
-        self.driver.screenshot(filepath)
+        max_height = 1600
+        measure = lambda n: self.driver.execute_script('return document.body.parentNode.scroll' + n)
+        self.driver.set_window_size(measure('Width'), max_height) # May need manual adjustment
+        time.sleep(3)
+        self.driver.set_window_size(measure('Width'), max_height) # May need manual adjustment
+
+        el = self.driver.find_element_by_tag_name('body')
+
+        el.screenshot(filepath)
 
         print('soundcloud_track_fullpage: done.')
